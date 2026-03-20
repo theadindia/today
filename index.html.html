@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ad Page</title>
+    <title>Center Ad</title>
     <style>
         * {
             margin: 0;
@@ -14,69 +14,76 @@
         body {
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #f5f5f5;
+            background: #f4f4f4;
             font-family: Arial, sans-serif;
         }
         
-        .ad-container {
+        .ad-wrapper {
             width: 100%;
             max-width: 1200px;
-            margin: 20px auto;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .ad-space {
-            min-height: 100px;
-            width: 100%;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         
-        /* Responsive ad spaces */
-        .ad-top, .ad-middle, .ad-bottom {
-            width: 100%;
+        /* Your original ad-box styling */
+        .ad-box {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
             text-align: center;
         }
         
-        /* Optional: ad borders for visibility while testing */
-        .ad-space[style*="border"] {
-            border: 2px dashed #ccc;
-            background: #f9f9f9;
+        .ad-box:hover {
+            transform: scale(1.05);
+        }
+        
+        .ad-box h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .ad-box p {
+            color: white;
+            font-size: 16px;
+        }
+        
+        .ad-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: white;
+            color: #007bff;
+            border-radius: 25px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="ad-container">
-        <!-- Top Ad Space -->
-        <div class="ad-space ad-top" id="ad-top">
-            <!-- APNA AD CODE YAHAN LAGAYE -->
-            <!-- Example: Google AdSense code -->
-        </div>
-        
-        <!-- Middle Ad Space -->
-        <div class="ad-space ad-middle" id="ad-middle">
-            <!-- APNA AD CODE YAHAN LAGAYE -->
-            <!-- Example: Google AdSense code -->
-        </div>
-        
-        <!-- Bottom Ad Space -->
-        <div class="ad-space ad-bottom" id="ad-bottom">
-            <!-- APNA AD CODE YAHAN LAGAYE -->
-            <!-- Example: Google AdSense code -->
+    <div class="ad-wrapper">
+        <!-- Aapka diya hua ad code exactly yahan center mein laga diya -->
+        <div class="ad-box" onclick="openAd()">
+            <h1>Click & Visit</h1>
+            <p>Go to Google Now 🚀</p>
+            <div class="ad-btn">Click Here</div>
         </div>
     </div>
     
-    <!-- Optional: Debug info (remove in production) -->
-    <!-- <div style="margin-top: 20px; color: #666; font-size: 12px;">
-        Sirf ad code ke liye blank template
-    </div> -->
+    <script>
+    function openAd() {
+        window.open("https://www.google.com", "_blank");
+    }
+    </script>
 </body>
 </html>
