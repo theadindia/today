@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Center Ad</title>
+    <title>Center Ad - Same Tab</title>
     <style>
         * {
             margin: 0;
@@ -72,18 +72,12 @@
 </head>
 <body>
     <div class="ad-wrapper">
-        <!-- Aapka diya hua ad code exactly yahan center mein laga diya -->
-        <div class="ad-box" onclick="openAd()">
+        <!-- Ad box with same tab link -->
+        <div class="ad-box" onclick="window.location.href='https://www.google.com';">
             <h1>Click & Visit</h1>
             <p>Go to Google Now 🚀</p>
             <div class="ad-btn">Click Here</div>
         </div>
     </div>
-    
-    <script>
-    function openAd() {
-        window.open("https://www.google.com", "_blank");
-    }
-    </script>
 </body>
 </html>
