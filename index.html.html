@@ -1,8 +1,264 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-<meta http-equiv="refresh" content="0; url=https://viiukuhe.com/dc/?blockID=420860">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Protection System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .ip-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .ip-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #dc3545;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .ip-address {
+            font-family: monospace;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .ip-reason {
+            font-size: 0.85em;
+            color: #dc3545;
+            margin-top: 5px;
+        }
+        
+        .badge {
+            background: #dc3545;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+        
+        .badge-safe {
+            background: #28a745;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #5a67d8;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 1.5em; }
+            .ip-item { flex-direction: column; text-align: center; }
+            .badge { margin-top: 10px; }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="card header">
+            <h1>🛡️ Bot Protection System</h1>
+            <p>Vercel पर चलने वाला ऑटोमैटिक बॉट ब्लॉकर</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-label">आपका IP</div>
+                <div class="stat-number" id="myIp">Loading...</div>
+                <div class="stat-label" id="statusBadge"></div>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-label">कुल ब्लॉक IP</div>
+                <div class="stat-number" id="totalBlocked">0</div>
+                <div class="stat-label">अब तक ब्लॉक</div>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-label">सिस्टम स्टेटस</div>
+                <div class="stat-number" id="systemStatus">🟢 ACTIVE</div>
+                <div class="stat-label">ऑटो ब्लॉक ऑन</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🚫 ब्लॉक किए गए IP पते</h2>
+            <div id="ipList" class="ip-list">
+                <div class="loading">Loading blocked IPs...</div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="refreshData()">🔄 Refresh Data</button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🔒 बॉट डिटेक्ट होते ही ऑटोमैटिक ब्लॉक</p>
+            <p>⚡ Vercel Serverless Functions के साथ 24/7 प्रोटेक्शन</p>
+        </div>
+    </div>
+    
+    <script>
+        // अपना IP पता करें
+        async function getMyIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById('myIp').textContent = data.ip;
+                
+                // चेक करें कि IP ब्लॉक तो नहीं
+                const blockCheck = await fetch(`/api/check-block?ip=${data.ip}`);
+                const blockStatus = await blockCheck.json();
+                
+                if (blockStatus.blocked) {
+                    document.getElementById('statusBadge').innerHTML = '<span class="badge">🔴 BLOCKED</span>';
+                } else {
+                    document.getElementById('statusBadge').innerHTML = '<span class="badge badge-safe">✅ SAFE</span>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('myIp').textContent = 'Error loading';
+            }
+        }
+        
+        // ब्लॉक IP की लिस्ट लोड करें
+        async function loadBlockedIPs() {
+            try {
+                const response = await fetch('/api/get-blocks');
+                const data = await response.json();
+                
+                document.getElementById('totalBlocked').textContent = data.total || 0;
+                
+                const ipListDiv = document.getElementById('ipList');
+                
+                if (data.ips && data.ips.length > 0) {
+                    ipListDiv.innerHTML = data.ips.map(ip => `
+                        <div class="ip-item">
+                            <div>
+                                <div class="ip-address">${escapeHtml(ip.ip)}</div>
+                                <div class="ip-reason">🚫 Reason: ${escapeHtml(ip.reason)}</div>
+                                <div class="ip-reason" style="color:#666">⏰ Blocked: ${new Date(ip.time).toLocaleString()}</div>
+                            </div>
+                            <div class="badge">BLOCKED</div>
+                        </div>
+                    `).join('');
+                } else {
+                    ipListDiv.innerHTML = '<p style="text-align:center;color:#999;">✨ No IPs blocked yet</p>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('ipList').innerHTML = '<p style="text-align:center;color:red;">Error loading data</p>';
+            }
+        }
+        
+        function refreshData() {
+            loadBlockedIPs();
+            getMyIP();
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // पेज लोड होने पर
+        getMyIP();
+        loadBlockedIPs();
+        
+        // हर 30 सेकंड में रिफ्रेश
+        setInterval(() => {
+            loadBlockedIPs();
+        }, 30000);
+    </script>
 </body>
 </html>
