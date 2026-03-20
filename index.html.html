@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ad-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .ad-space {
+            min-height: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Responsive ad spaces */
+        .ad-top, .ad-middle, .ad-bottom {
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* Optional: ad borders for visibility while testing */
+        .ad-space[style*="border"] {
+            border: 2px dashed #ccc;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="ad-container">
+        <!-- Top Ad Space -->
+        <div class="ad-space ad-top" id="ad-top">
+            <!-- APNA AD CODE YAHAN LAGAYE -->
+            <!-- Example: Google AdSense code -->
+        </div>
+        
+        <!-- Middle Ad Space -->
+        <div class="ad-space ad-middle" id="ad-middle">
+            <!-- APNA AD CODE YAHAN LAGAYE -->
+            <!-- Example: Google AdSense code -->
+        </div>
+        
+        <!-- Bottom Ad Space -->
+        <div class="ad-space ad-bottom" id="ad-bottom">
+            <!-- APNA AD CODE YAHAN LAGAYE -->
+            <!-- Example: Google AdSense code -->
+        </div>
+    </div>
+    
+    <!-- Optional: Debug info (remove in production) -->
+    <!-- <div style="margin-top: 20px; color: #666; font-size: 12px;">
+        Sirf ad code ke liye blank template
+    </div> -->
+</body>
+</html>
