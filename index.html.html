@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>फास्ट ग्रिड थीम | SEO URL Slug के साथ पोस्ट खुलें</title>
+  <title>फास्ट ग्रिड थीम | प्ले बटन इमेज स्टाइल + SEO URL</title>
   <style>
     * {
       margin: 0;
@@ -85,12 +85,67 @@
       box-shadow: 0 20px 25px -12px rgba(0,0,0,0.2);
     }
 
-    .post-img {
+    /* Image container with play button overlay */
+    .post-img-container {
+      position: relative;
       width: 100%;
       height: 250px;
+      overflow: hidden;
+      background: #0a0a0a;
+    }
+
+    .post-img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      background: #eef2ff;
-      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .post-card:hover .post-img {
+      transform: scale(1.05);
+    }
+
+    /* Play Button Overlay - Video Thumbnail Style */
+    .play-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .play-button {
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .play-button svg {
+      width: 28px;
+      height: 28px;
+      margin-left: 4px;
+      fill: #3b82f6;
+    }
+
+    .post-card:hover .play-overlay {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .post-card:hover .play-button {
+      transform: scale(1.1);
+      background: white;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     }
 
     .post-content {
@@ -227,11 +282,50 @@
       box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
     }
 
+    .single-post-img-container {
+      position: relative;
+      width: 100%;
+      max-height: 450px;
+      overflow: hidden;
+      background: #0a0a0a;
+    }
+
     .single-post-img {
       width: 100%;
       max-height: 450px;
       object-fit: cover;
-      background: #e2e8f0;
+      display: block;
+    }
+
+    .single-post-play-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .single-post-play-button {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .single-post-play-button svg {
+      width: 40px;
+      height: 40px;
+      margin-left: 5px;
+      fill: #3b82f6;
     }
 
     .single-post-content {
@@ -432,6 +526,8 @@
     @media (max-width: 640px) {
       .single-post-title { font-size: 1.6rem; }
       .single-post-content { padding: 24px 20px; }
+      .play-button { width: 45px; height: 45px; }
+      .play-button svg { width: 20px; height: 20px; }
     }
   </style>
 </head>
@@ -439,7 +535,7 @@
 
 <div class="theme-header">
   <div class="logo">
-    <h1>⚡ ग्रिड थीम | SEO URL Slug के साथ</h1>
+    <h1>⚡ ग्रिड थीम | प्ले बटन इमेज स्टाइल</h1>
   </div>
   <button class="admin-btn" id="openAdminBtn">🔐 एडमिन पैनल</button>
 </div>
@@ -447,7 +543,7 @@
 <!-- DYNAMIC CONTENT -->
 <div id="appRoot"></div>
 
-<footer>✨ पोस्ट पर क्लिक करें → URL बनेगा: <strong style="color:#3b82f6">/post/टाइटल-का-slug</strong> | प्रति पेज 20 पोस्ट</footer>
+<footer>✨ पोस्ट पर क्लिक करें → SEO URL खुलेगा | हर इमेज पर प्ले बटन स्टाइल</footer>
 
 <!-- ADMIN PANEL MODAL -->
 <div id="adminModal" class="modal-overlay">
@@ -498,7 +594,7 @@
       </div>
       <button type="submit" class="submit-post">✨ पोस्ट प्रकाशित करें</button>
     </form>
-    <p style="font-size:12px; margin-top: 16px;">✅ पोस्ट क्लिक करने पर <strong>/post/टाइटल-का-slug</strong> बनेगा और उसी टैब में खुलेगा</p>
+    <p style="font-size:12px; margin-top: 16px;">✅ हर पोस्ट की इमेज पर प्ले बटन का स्टाइल दिखेगा (वीडियो थंबनेल जैसा)</p>
   </div>
 </div>
 
@@ -535,12 +631,12 @@
 
   // Save to localStorage
   function savePostsToLocal() {
-    localStorage.setItem('fastGridTheme_posts_final', JSON.stringify(allPosts));
+    localStorage.setItem('fastGridTheme_posts_playbtn', JSON.stringify(allPosts));
   }
 
   // Load posts
   function loadPostsFromStorage() {
-    const stored = localStorage.getItem('fastGridTheme_posts_final');
+    const stored = localStorage.getItem('fastGridTheme_posts_playbtn');
     if (stored) {
       try {
         allPosts = JSON.parse(stored);
@@ -553,47 +649,38 @@
       } catch(e) { allPosts = []; }
     }
     
-    // If no posts, add default demo posts
     if (allPosts.length === 0) {
       allPosts = [
         {
           id: Date.now()+101,
-          title: "SEO फ्रेंडली URL कैसे काम करता है",
-          description: "इस पोस्ट में आप देखेंगे कि पोस्ट पर क्लिक करने पर URL में टाइटल का slug बनता है। जैसे /post/seo-frendli-url-kaise-kaam-karta-hai। यह सर्च इंजन के लिए बेहतर है।",
-          tagsArray: ["seo", "url", "tips"],
+          title: "प्ले बटन स्टाइल के साथ इमेज",
+          description: "अब हर पोस्ट की इमेज पर प्ले बटन का ओवरले दिखेगा। यह वीडियो थंबनेल जैसा लुक देता है। पोस्ट पर क्लिक करने पर SEO URL बनेगा।",
+          tagsArray: ["playbutton", "style", "feature"],
           imageBase64: "https://picsum.photos/id/26/250/250",
           createdAt: new Date().toISOString()
         },
         {
           id: Date.now()+102,
-          title: "अनलिमिटेड पोस्ट और ग्रिड सिस्टम",
-          description: "हर पेज पर 20 पोस्ट, पैजिनेशन के साथ। एडमिन पैनल से नई पोस्ट जोड़ें और मेटा जेनरेटर का उपयोग करें।",
-          tagsArray: ["unlimited", "grid", "fast"],
+          title: "SEO फ्रेंडली URL सिस्टम",
+          description: "पोस्ट क्लिक करने पर URL में टाइटल का slug बनता है। जैसे /post/seo-frendli-url-kaise-kaam-karta-hai। यह सर्च इंजन के लिए बेहतर है।",
+          tagsArray: ["seo", "url", "slug"],
           imageBase64: "https://picsum.photos/id/104/250/250",
           createdAt: new Date().toISOString()
         },
         {
           id: Date.now()+103,
-          title: "मेटा डिस्क्रिप्शन जेनरेटर टूल",
-          description: "एडमिन पैनल में स्मार्ट मेटा जेनरेटर से SEO के लिए बेहतरीन डिस्क्रिप्शन बनाएं।",
-          tagsArray: ["metatool", "generator"],
+          title: "अनलिमिटेड पोस्ट ग्रिड सिस्टम",
+          description: "हर पेज पर 20 पोस्ट, पैजिनेशन के साथ। एडमिन पैनल से नई पोस्ट जोड़ें और मेटा जेनरेटर का उपयोग करें।",
+          tagsArray: ["unlimited", "grid", "fast"],
           imageBase64: "https://picsum.photos/id/20/250/250",
           createdAt: new Date().toISOString()
         },
         {
           id: Date.now()+104,
-          title: "ग्रिड थीम की खासियतें और फीचर्स",
-          description: "यह थीम बहुत तेज है। हर पोस्ट में इमेज, टैग और डिस्क्रिप्शन। मोबाइल फ्रेंडली और SEO optimized।",
-          tagsArray: ["theme", "features", "fast"],
+          title: "मेटा डिस्क्रिप्शन जेनरेटर टूल",
+          description: "एडमिन पैनल में स्मार्ट मेटा जेनरेटर से SEO के लिए बेहतरीन डिस्क्रिप्शन बनाएं।",
+          tagsArray: ["metatool", "generator", "seo"],
           imageBase64: "https://picsum.photos/id/1015/250/250",
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: Date.now()+105,
-          title: "पोस्ट कैसे बनाएं और प्रकाशित करें",
-          description: "एडमिन पैनल से आप आसानी से पोस्ट बना सकते हैं। टाइटल, विवरण, हैशटैग और इमेज अपलोड करें। पोस्ट क्लिक करने पर SEO URL बनेगा।",
-          tagsArray: ["tutorial", "admin", "create"],
-          imageBase64: "https://picsum.photos/id/155/250/250",
           createdAt: new Date().toISOString()
         }
       ];
@@ -637,7 +724,6 @@
       return false; 
     }
     
-    // Check if post with same slug already exists
     const newSlug = createSlug(title);
     const exists = allPosts.some(p => createSlug(p.title) === newSlug);
     if (exists) {
@@ -660,10 +746,10 @@
     return true;
   }
 
-  // ---------- ROUTING / VIEW RENDERING ----------
-  const appRoot = document.getElementById('appRoot');
-  
-  // Render home page (grid + pagination)
+  // Play button SVG
+  const playButtonSVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>`;
+
+  // Render home page with play button overlay
   function renderHomePage() {
     const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
     
@@ -683,7 +769,14 @@
       const slug = createSlug(post.title);
       gridHtml += `
         <div class="post-card" data-slug="${slug}">
-          <img class="post-img" src="${escapeHtml(post.imageBase64)}" alt="post image" loading="lazy" onerror="this.src='https://picsum.photos/id/100/250/250'">
+          <div class="post-img-container">
+            <img class="post-img" src="${escapeHtml(post.imageBase64)}" alt="post image" loading="lazy" onerror="this.src='https://picsum.photos/id/100/250/250'">
+            <div class="play-overlay">
+              <div class="play-button">
+                ${playButtonSVG}
+              </div>
+            </div>
+          </div>
           <div class="post-content">
             <div class="post-title">${escapeHtml(post.title)}</div>
             <div class="post-desc">${escapeHtml(post.description)}</div>
@@ -696,7 +789,7 @@
     gridHtml += `</div><div class="pagination" id="paginationControls"></div>`;
     appRoot.innerHTML = gridHtml;
     
-    // attach click event to cards - opens with SEO URL
+    // attach click event to cards
     document.querySelectorAll('.post-card').forEach(card => {
       card.addEventListener('click', () => {
         const slug = card.getAttribute('data-slug');
@@ -708,7 +801,7 @@
       });
     });
     
-    // render pagination buttons
+    // render pagination
     let paginationHtml = '';
     paginationHtml += `<button class="page-btn" data-page="prev" ${currentPage === 1 ? 'disabled style="opacity:0.5;"' : ''}>◀ पिछला</button>`;
     const maxVisible = 5;
@@ -725,24 +818,16 @@
     document.querySelectorAll('.page-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const val = btn.getAttribute('data-page');
-        if (val === 'prev') { 
-          if (currentPage > 1) currentPage--; 
-          else return; 
-        }
-        else if (val === 'next') { 
-          if (currentPage < totalPages) currentPage++; 
-          else return; 
-        }
-        else { 
-          currentPage = parseInt(val, 10); 
-        }
+        if (val === 'prev') { if (currentPage > 1) currentPage--; else return; }
+        else if (val === 'next') { if (currentPage < totalPages) currentPage++; else return; }
+        else { currentPage = parseInt(val, 10); }
         renderHomePage();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
   }
   
-  // Render single post page with SEO friendly URL
+  // Render single post page with play button overlay
   function renderSinglePost(slug) {
     const post = getPostBySlug(slug);
     if (!post) {
@@ -757,7 +842,7 @@
         backBtn.addEventListener('click', () => {
           history.pushState({}, '', '/');
           renderHomePage();
-          document.title = "फास्ट ग्रिड थीम | SEO URL Slug के साथ";
+          document.title = "फास्ट ग्रिड थीम | प्ले बटन इमेज स्टाइल";
         });
       }
       return;
@@ -770,7 +855,14 @@
     
     const singleHtml = `
       <div class="single-post-container">
-        <img class="single-post-img" src="${escapeHtml(post.imageBase64)}" alt="${escapeHtml(post.title)}" onerror="this.src='https://picsum.photos/id/100/800/450'">
+        <div class="single-post-img-container">
+          <img class="single-post-img" src="${escapeHtml(post.imageBase64)}" alt="${escapeHtml(post.title)}" onerror="this.src='https://picsum.photos/id/100/800/450'">
+          <div class="single-post-play-overlay">
+            <div class="single-post-play-button">
+              ${playButtonSVG}
+            </div>
+          </div>
+        </div>
         <div class="single-post-content">
           <h1 class="single-post-title">${escapeHtml(post.title)}</h1>
           <div class="single-post-meta">
@@ -786,17 +878,15 @@
     `;
     appRoot.innerHTML = singleHtml;
     
-    // Update page title for SEO
     document.title = `${post.title} | ग्रिड थीम`;
     
-    // Handle back button click
     const backLink = document.querySelector('.back-to-home');
     if (backLink) {
       backLink.addEventListener('click', (e) => {
         e.preventDefault();
         history.pushState({}, '', '/');
         renderHomePage();
-        document.title = "फास्ट ग्रिड थीम | SEO URL Slug के साथ";
+        document.title = "फास्ट ग्रिड थीम | प्ले बटन इमेज स्टाइल";
         window.scrollTo({ top: 0 });
       });
     }
@@ -812,28 +902,22 @@
     });
   }
   
-  // Routing based on URL path
   function route() {
     const path = window.location.pathname;
     if (path.startsWith('/post/')) {
       const slug = path.replace('/post/', '');
-      if (slug) {
-        renderSinglePost(slug);
-      } else {
-        renderHomePage();
-      }
+      if (slug) renderSinglePost(slug);
+      else renderHomePage();
     } else {
       renderHomePage();
     }
   }
   
-  // Handle browser back/forward
-  window.addEventListener('popstate', () => {
-    route();
-  });
+  window.addEventListener('popstate', () => route());
   
   // ---------- ADMIN PANEL LOGIC ----------
   let currentImageData = null;
+  const appRoot = document.getElementById('appRoot');
   const adminModal = document.getElementById('adminModal');
   const openAdminBtn = document.getElementById('openAdminBtn');
   const closeAdminBtn = document.getElementById('closeAdminBtn');
@@ -845,7 +929,6 @@
   const imagePreview = document.getElementById('imagePreviewArea');
   const imgError = document.getElementById('imgError');
   
-  // meta elements
   const metaInput = document.getElementById('metaInputText');
   const generateBtn = document.getElementById('generateMetaBtn');
   const smartBtn = document.getElementById('smartMetaBtn');
@@ -926,13 +1009,11 @@
       imagePreview.innerHTML = `<span>प्रीव्यू</span>`;
       adminModal.classList.remove('open');
       currentPage = 1;
-      if (window.location.pathname !== '/') {
-        history.pushState({}, '', '/');
-      }
+      if (window.location.pathname !== '/') history.pushState({}, '', '/');
       renderHomePage();
-      document.title = "फास्ट ग्रिड थीम | SEO URL Slug के साथ";
+      document.title = "फास्ट ग्रिड थीम | प्ले बटन इमेज स्टाइल";
       const toast = document.createElement('div');
-      toast.innerText = "✅ पोस्ट प्रकाशित! अब ग्रिड में क्लिक करें → SEO URL खुलेगा";
+      toast.innerText = "✅ पोस्ट प्रकाशित! प्ले बटन स्टाइल के साथ";
       toast.style.cssText = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#0f172a; color:white; padding:10px 22px; border-radius:40px; z-index:1100";
       document.body.appendChild(toast);
       setTimeout(() => toast.remove(), 2000);
@@ -948,7 +1029,6 @@
   closeAdminBtn.addEventListener('click', () => adminModal.classList.remove('open'));
   adminModal.addEventListener('click', (e) => { if (e.target === adminModal) adminModal.classList.remove('open'); });
   
-  // Initialize
   loadPostsFromStorage();
   route();
 </script>
