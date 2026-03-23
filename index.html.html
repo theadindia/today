@@ -1,264 +1,956 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot Protection System</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        .header {
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .stat-box {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #667eea;
-            margin: 10px 0;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 0.9em;
-        }
-        
-        .ip-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .ip-item {
-            background: #f8f9fa;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border-left: 4px solid #dc3545;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .ip-address {
-            font-family: monospace;
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-        
-        .ip-reason {
-            font-size: 0.85em;
-            color: #dc3545;
-            margin-top: 5px;
-        }
-        
-        .badge {
-            background: #dc3545;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-        }
-        
-        .badge-safe {
-            background: #28a745;
-        }
-        
-        button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 10px;
-        }
-        
-        button:hover {
-            background: #5a67d8;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-        }
-        
-        .footer {
-            text-align: center;
-            color: white;
-            padding: 20px;
-        }
-        
-        @media (max-width: 768px) {
-            h1 { font-size: 1.5em; }
-            .ip-item { flex-direction: column; text-align: center; }
-            .badge { margin-top: 10px; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>फास्ट ग्रिड थीम | SEO URL Slug के साथ पोस्ट खुलें</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #1e293b;
+      padding: 24px 20px 60px;
+    }
+
+    .theme-header {
+      max-width: 1400px;
+      margin: 0 auto 32px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 16px;
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #3b82f6, #a855f7);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .admin-btn {
+      background: #0f172a;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .admin-btn:hover {
+      background: #1e293b;
+      transform: scale(1.02);
+    }
+
+    .posts-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    .post-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.03), 0 6px 6px rgba(0,0,0,0.05);
+      transition: all 0.25s;
+      border: 1px solid #eef2ff;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .post-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -12px rgba(0,0,0,0.2);
+    }
+
+    .post-img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      background: #eef2ff;
+      display: block;
+    }
+
+    .post-content {
+      padding: 18px 16px 20px;
+      flex: 1;
+    }
+
+    .post-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+      color: #0f172a;
+    }
+
+    .post-desc {
+      color: #334155;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      margin-bottom: 14px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      background: #eef2ff;
+      color: #2563eb;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 30px;
+      letter-spacing: 0.3px;
+    }
+
+    .pagination {
+      max-width: 1400px;
+      margin: 48px auto 20px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .page-btn {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 10px 18px;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .page-btn.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+
+    .page-btn:hover:not(.active) {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    /* MODAL / ADMIN PANEL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s ease;
+    }
+
+    .modal-overlay.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .admin-panel {
+      background: white;
+      max-width: 600px;
+      width: 90%;
+      border-radius: 2rem;
+      padding: 28px 26px;
+      box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .admin-panel h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-admin {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #64748b;
+    }
+
+    /* POST DETAIL PAGE STYLES */
+    .single-post-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+    }
+
+    .single-post-img {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      background: #e2e8f0;
+    }
+
+    .single-post-content {
+      padding: 40px 32px;
+    }
+
+    .single-post-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+
+    .single-post-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+
+    .single-post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .single-post-tag {
+      background: #eef2ff;
+      color: #2563eb;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .single-post-description {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #1e293b;
+      white-space: pre-wrap;
+      margin-bottom: 30px;
+    }
+
+    .back-to-home {
+      display: inline-block;
+      background: #f1f5f9;
+      color: #1e293b;
+      padding: 10px 24px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .back-to-home:hover {
+      background: #e2e8f0;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+      color: #0f172a;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      background: #fefefe;
+    }
+
+    .meta-generator {
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 24px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .meta-generator h3 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: #0f172a;
+    }
+
+    .gen-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .gen-btn {
+      background: #eef2ff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: #1e40af;
+    }
+
+    .meta-preview {
+      background: white;
+      border-radius: 16px;
+      padding: 12px;
+      margin-top: 12px;
+      border-left: 4px solid #3b82f6;
+      font-size: 0.85rem;
+    }
+
+    .copy-meta-btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .image-preview {
+      margin-top: 10px;
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px dashed #94a3b8;
+    }
+
+    .submit-post {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 14px;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 40px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .error-msg {
+      color: #dc2626;
+      font-size: 0.8rem;
+      margin-top: 6px;
+    }
+
+    .empty-grid {
+      text-align: center;
+      grid-column: 1 / -1;
+      padding: 60px 20px;
+      background: #f8fafc;
+      border-radius: 48px;
+      color: #475569;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #64748b;
+      font-size: 0.8rem;
+    }
+
+    .url-badge {
+      background: #eef2ff;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      color: #2563eb;
+      font-family: monospace;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    @media (max-width: 640px) {
+      .single-post-title { font-size: 1.6rem; }
+      .single-post-content { padding: 24px 20px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card header">
-            <h1>🛡️ Bot Protection System</h1>
-            <p>Vercel पर चलने वाला ऑटोमैटिक बॉट ब्लॉकर</p>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-box">
-                <div class="stat-label">आपका IP</div>
-                <div class="stat-number" id="myIp">Loading...</div>
-                <div class="stat-label" id="statusBadge"></div>
-            </div>
-            
-            <div class="stat-box">
-                <div class="stat-label">कुल ब्लॉक IP</div>
-                <div class="stat-number" id="totalBlocked">0</div>
-                <div class="stat-label">अब तक ब्लॉक</div>
-            </div>
-            
-            <div class="stat-box">
-                <div class="stat-label">सिस्टम स्टेटस</div>
-                <div class="stat-number" id="systemStatus">🟢 ACTIVE</div>
-                <div class="stat-label">ऑटो ब्लॉक ऑन</div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <h2>🚫 ब्लॉक किए गए IP पते</h2>
-            <div id="ipList" class="ip-list">
-                <div class="loading">Loading blocked IPs...</div>
-            </div>
-            <div style="text-align: center; margin-top: 20px;">
-                <button onclick="refreshData()">🔄 Refresh Data</button>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>🔒 बॉट डिटेक्ट होते ही ऑटोमैटिक ब्लॉक</p>
-            <p>⚡ Vercel Serverless Functions के साथ 24/7 प्रोटेक्शन</p>
-        </div>
-    </div>
+
+<div class="theme-header">
+  <div class="logo">
+    <h1>⚡ ग्रिड थीम | SEO URL Slug के साथ</h1>
+  </div>
+  <button class="admin-btn" id="openAdminBtn">🔐 एडमिन पैनल</button>
+</div>
+
+<!-- DYNAMIC CONTENT -->
+<div id="appRoot"></div>
+
+<footer>✨ पोस्ट पर क्लिक करें → URL बनेगा: <strong style="color:#3b82f6">/post/टाइटल-का-slug</strong> | प्रति पेज 20 पोस्ट</footer>
+
+<!-- ADMIN PANEL MODAL -->
+<div id="adminModal" class="modal-overlay">
+  <div class="admin-panel">
+    <h2>📝 एडमिन पैनल 
+      <button class="close-admin" id="closeAdminBtn">&times;</button>
+    </h2>
     
-    <script>
-        // अपना IP पता करें
-        async function getMyIP() {
-            try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                document.getElementById('myIp').textContent = data.ip;
-                
-                // चेक करें कि IP ब्लॉक तो नहीं
-                const blockCheck = await fetch(`/api/check-block?ip=${data.ip}`);
-                const blockStatus = await blockCheck.json();
-                
-                if (blockStatus.blocked) {
-                    document.getElementById('statusBadge').innerHTML = '<span class="badge">🔴 BLOCKED</span>';
-                } else {
-                    document.getElementById('statusBadge').innerHTML = '<span class="badge badge-safe">✅ SAFE</span>';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('myIp').textContent = 'Error loading';
-            }
+    <div class="meta-generator">
+      <h3>🤖 मेटा डिस्क्रिप्शन जेनरेटर</h3>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>📝 जेनरेट करने के लिए टेक्स्ट डालें</label>
+        <input type="text" id="metaInputText" placeholder="उदा: ग्रिड थीम के बारे में जानकारी...">
+        <div class="gen-buttons">
+          <button type="button" class="gen-btn" id="generateMetaBtn">✨ मेटा जेनरेट करें</button>
+          <button type="button" class="gen-btn" id="smartMetaBtn">🎯 स्मार्ट (टाइटल+टैग)</button>
+        </div>
+        <div id="metaPreviewArea" class="meta-preview" style="display: none;">
+          <strong>📌 जेनरेटेड मेटा:</strong><br>
+          <span id="generatedMetaText"></span><br>
+          <button type="button" id="copyMetaBtn" class="copy-meta-btn">📋 कॉपी करें</button>
+          <button type="button" id="useInDescBtn" class="copy-meta-btn" style="background: #8b5cf6;">✍️ विवरण में उपयोग</button>
+        </div>
+      </div>
+    </div>
+
+    <form id="postForm">
+      <div class="form-group">
+        <label>📌 पोस्ट का टाइटल *</label>
+        <input type="text" id="postTitle" placeholder="आपका शीर्षक..." required>
+        <div style="font-size: 0.7rem; color: #64748b; margin-top: 5px;">🔗 URL Slug: <span id="liveSlugPreview">post/आपका-टाइटल</span></div>
+      </div>
+      <div class="form-group">
+        <label>📄 विवरण (डिस्क्रिप्शन) *</label>
+        <textarea id="postDesc" rows="3" placeholder="पोस्ट का विवरण यहाँ लिखें..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label>🏷️ # हैशटैग (कॉमा से अलग करें)</label>
+        <input type="text" id="postTags" placeholder="#coding, #blog, #india">
+      </div>
+      <div class="form-group">
+        <label>🖼️ इमेज अपलोड (250x250 रेश्यो)</label>
+        <input type="file" id="postImage" accept="image/*">
+        <div class="image-preview" id="imagePreviewArea">
+          <span style="font-size:12px;">प्रीव्यू</span>
+        </div>
+        <div class="error-msg" id="imgError"></div>
+      </div>
+      <button type="submit" class="submit-post">✨ पोस्ट प्रकाशित करें</button>
+    </form>
+    <p style="font-size:12px; margin-top: 16px;">✅ पोस्ट क्लिक करने पर <strong>/post/टाइटल-का-slug</strong> बनेगा और उसी टैब में खुलेगा</p>
+  </div>
+</div>
+
+<script>
+  // ---------- GLOBAL ----------
+  let allPosts = [];        
+  const POSTS_PER_PAGE = 20;
+  let currentPage = 1;
+  
+  // Helper: create SEO friendly slug from title
+  function createSlug(title) {
+    return title
+      .toLowerCase()
+      .replace(/[^\w\s\u0900-\u097F]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/--+/g, '-')
+      .trim();
+  }
+
+  // Live slug preview
+  const postTitleInput = document.getElementById('postTitle');
+  const liveSlugPreview = document.getElementById('liveSlugPreview');
+  if (postTitleInput && liveSlugPreview) {
+    postTitleInput.addEventListener('input', () => {
+      const slug = createSlug(postTitleInput.value) || 'आपका-टाइटल';
+      liveSlugPreview.innerText = `post/${slug}`;
+    });
+  }
+
+  // Get post by slug
+  function getPostBySlug(slug) {
+    return allPosts.find(p => createSlug(p.title) === slug);
+  }
+
+  // Save to localStorage
+  function savePostsToLocal() {
+    localStorage.setItem('fastGridTheme_posts_final', JSON.stringify(allPosts));
+  }
+
+  // Load posts
+  function loadPostsFromStorage() {
+    const stored = localStorage.getItem('fastGridTheme_posts_final');
+    if (stored) {
+      try {
+        allPosts = JSON.parse(stored);
+        allPosts = allPosts.map(p => {
+          if (!p.tagsArray && p.tags) p.tagsArray = p.tags;
+          if (!p.tagsArray) p.tagsArray = [];
+          if (!p.createdAt) p.createdAt = new Date().toISOString();
+          return p;
+        });
+      } catch(e) { allPosts = []; }
+    }
+    
+    // If no posts, add default demo posts
+    if (allPosts.length === 0) {
+      allPosts = [
+        {
+          id: Date.now()+101,
+          title: "SEO फ्रेंडली URL कैसे काम करता है",
+          description: "इस पोस्ट में आप देखेंगे कि पोस्ट पर क्लिक करने पर URL में टाइटल का slug बनता है। जैसे /post/seo-frendli-url-kaise-kaam-karta-hai। यह सर्च इंजन के लिए बेहतर है।",
+          tagsArray: ["seo", "url", "tips"],
+          imageBase64: "https://picsum.photos/id/26/250/250",
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: Date.now()+102,
+          title: "अनलिमिटेड पोस्ट और ग्रिड सिस्टम",
+          description: "हर पेज पर 20 पोस्ट, पैजिनेशन के साथ। एडमिन पैनल से नई पोस्ट जोड़ें और मेटा जेनरेटर का उपयोग करें।",
+          tagsArray: ["unlimited", "grid", "fast"],
+          imageBase64: "https://picsum.photos/id/104/250/250",
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: Date.now()+103,
+          title: "मेटा डिस्क्रिप्शन जेनरेटर टूल",
+          description: "एडमिन पैनल में स्मार्ट मेटा जेनरेटर से SEO के लिए बेहतरीन डिस्क्रिप्शन बनाएं।",
+          tagsArray: ["metatool", "generator"],
+          imageBase64: "https://picsum.photos/id/20/250/250",
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: Date.now()+104,
+          title: "ग्रिड थीम की खासियतें और फीचर्स",
+          description: "यह थीम बहुत तेज है। हर पोस्ट में इमेज, टैग और डिस्क्रिप्शन। मोबाइल फ्रेंडली और SEO optimized।",
+          tagsArray: ["theme", "features", "fast"],
+          imageBase64: "https://picsum.photos/id/1015/250/250",
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: Date.now()+105,
+          title: "पोस्ट कैसे बनाएं और प्रकाशित करें",
+          description: "एडमिन पैनल से आप आसानी से पोस्ट बना सकते हैं। टाइटल, विवरण, हैशटैग और इमेज अपलोड करें। पोस्ट क्लिक करने पर SEO URL बनेगा।",
+          tagsArray: ["tutorial", "admin", "create"],
+          imageBase64: "https://picsum.photos/id/155/250/250",
+          createdAt: new Date().toISOString()
         }
-        
-        // ब्लॉक IP की लिस्ट लोड करें
-        async function loadBlockedIPs() {
-            try {
-                const response = await fetch('/api/get-blocks');
-                const data = await response.json();
-                
-                document.getElementById('totalBlocked').textContent = data.total || 0;
-                
-                const ipListDiv = document.getElementById('ipList');
-                
-                if (data.ips && data.ips.length > 0) {
-                    ipListDiv.innerHTML = data.ips.map(ip => `
-                        <div class="ip-item">
-                            <div>
-                                <div class="ip-address">${escapeHtml(ip.ip)}</div>
-                                <div class="ip-reason">🚫 Reason: ${escapeHtml(ip.reason)}</div>
-                                <div class="ip-reason" style="color:#666">⏰ Blocked: ${new Date(ip.time).toLocaleString()}</div>
-                            </div>
-                            <div class="badge">BLOCKED</div>
-                        </div>
-                    `).join('');
-                } else {
-                    ipListDiv.innerHTML = '<p style="text-align:center;color:#999;">✨ No IPs blocked yet</p>';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('ipList').innerHTML = '<p style="text-align:center;color:red;">Error loading data</p>';
-            }
+      ];
+      savePostsToLocal();
+    }
+    
+    allPosts.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }
+
+  // Resize image
+  function resizeImageTo250(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width, height = img.height;
+          const maxSize = 250;
+          if (width > height) {
+            if (width > maxSize) { height = (height * maxSize) / width; width = maxSize; }
+          } else {
+            if (height > maxSize) { width = (width * maxSize) / height; height = maxSize; }
+          }
+          canvas.width = width; canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.85));
+        };
+        img.onerror = () => reject("Image load error");
+        img.src = e.target.result;
+      };
+      reader.onerror = () => reject("File read error");
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function addNewPost(title, description, tagsString, imageBase64) {
+    if (!title.trim() || !description.trim()) { 
+      alert("टाइटल और विवरण दोनों जरूरी है"); 
+      return false; 
+    }
+    
+    // Check if post with same slug already exists
+    const newSlug = createSlug(title);
+    const exists = allPosts.some(p => createSlug(p.title) === newSlug);
+    if (exists) {
+      alert("इस नाम से पोस्ट पहले से मौजूद है! कृपया अलग टाइटल दें।");
+      return false;
+    }
+    
+    let tagsArray = tagsString.trim() !== "" ? tagsString.split(',').map(t => t.trim().replace(/^#/, '')).filter(t => t) : [];
+    let finalImage = imageBase64 || "https://picsum.photos/id/1/250/250";
+    const newPost = { 
+      id: Date.now(), 
+      title: title.trim(), 
+      description: description.trim(), 
+      tagsArray, 
+      imageBase64: finalImage, 
+      createdAt: new Date().toISOString() 
+    };
+    allPosts.unshift(newPost);
+    savePostsToLocal();
+    return true;
+  }
+
+  // ---------- ROUTING / VIEW RENDERING ----------
+  const appRoot = document.getElementById('appRoot');
+  
+  // Render home page (grid + pagination)
+  function renderHomePage() {
+    const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+    
+    if (allPosts.length === 0) {
+      appRoot.innerHTML = `<div class="empty-grid" style="max-width:1400px; margin:0 auto;">✨ कोई पोस्ट नहीं। एडमिन पैनल से पहली पोस्ट बनाएं।</div>`;
+      return;
+    }
+    
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+    const startIdx = (currentPage - 1) * POSTS_PER_PAGE;
+    const pagePosts = allPosts.slice(startIdx, startIdx + POSTS_PER_PAGE);
+    
+    let gridHtml = `<div class="posts-grid" id="postsGridContainer">`;
+    for (let post of pagePosts) {
+      const tagsHtml = post.tagsArray.map(tag => `<span class="tag">#${escapeHtml(tag)}</span>`).join('');
+      const slug = createSlug(post.title);
+      gridHtml += `
+        <div class="post-card" data-slug="${slug}">
+          <img class="post-img" src="${escapeHtml(post.imageBase64)}" alt="post image" loading="lazy" onerror="this.src='https://picsum.photos/id/100/250/250'">
+          <div class="post-content">
+            <div class="post-title">${escapeHtml(post.title)}</div>
+            <div class="post-desc">${escapeHtml(post.description)}</div>
+            <div class="post-tags">${tagsHtml || '<span class="tag">#notag</span>'}</div>
+            <div class="url-badge">🔗 /post/${slug}</div>
+          </div>
+        </div>
+      `;
+    }
+    gridHtml += `</div><div class="pagination" id="paginationControls"></div>`;
+    appRoot.innerHTML = gridHtml;
+    
+    // attach click event to cards - opens with SEO URL
+    document.querySelectorAll('.post-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const slug = card.getAttribute('data-slug');
+        if (slug) {
+          const newUrl = `/post/${slug}`;
+          history.pushState({}, '', newUrl);
+          renderSinglePost(slug);
         }
-        
-        function refreshData() {
-            loadBlockedIPs();
-            getMyIP();
+      });
+    });
+    
+    // render pagination buttons
+    let paginationHtml = '';
+    paginationHtml += `<button class="page-btn" data-page="prev" ${currentPage === 1 ? 'disabled style="opacity:0.5;"' : ''}>◀ पिछला</button>`;
+    const maxVisible = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisible/2));
+    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+    if (endPage - startPage < maxVisible-1) startPage = Math.max(1, endPage - maxVisible + 1);
+    for (let i = startPage; i <= endPage; i++) {
+      paginationHtml += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+    }
+    paginationHtml += `<button class="page-btn" data-page="next" ${currentPage === totalPages ? 'disabled style="opacity:0.5;"' : ''}>अगला ▶</button>`;
+    const paginationContainer = document.getElementById('paginationControls');
+    if (paginationContainer) paginationContainer.innerHTML = paginationHtml;
+    
+    document.querySelectorAll('.page-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const val = btn.getAttribute('data-page');
+        if (val === 'prev') { 
+          if (currentPage > 1) currentPage--; 
+          else return; 
         }
-        
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        else if (val === 'next') { 
+          if (currentPage < totalPages) currentPage++; 
+          else return; 
         }
-        
-        // पेज लोड होने पर
-        getMyIP();
-        loadBlockedIPs();
-        
-        // हर 30 सेकंड में रिफ्रेश
-        setInterval(() => {
-            loadBlockedIPs();
-        }, 30000);
-    </script>
+        else { 
+          currentPage = parseInt(val, 10); 
+        }
+        renderHomePage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  }
+  
+  // Render single post page with SEO friendly URL
+  function renderSinglePost(slug) {
+    const post = getPostBySlug(slug);
+    if (!post) {
+      appRoot.innerHTML = `<div style="max-width:800px; margin:60px auto; text-align:center; background:white; padding:40px; border-radius:32px;">
+        <h2>❌ पोस्ट नहीं मिली</h2>
+        <p style="margin-top:10px;">हो सकता है पोस्ट डिलीट हो गई हो या URL गलत हो।</p>
+        <div class="back-to-home" style="display:inline-block; margin-top:20px;">← सभी पोस्ट पर वापस जाएं</div>
+      </div>`;
+      
+      const backBtn = document.querySelector('.back-to-home');
+      if (backBtn) {
+        backBtn.addEventListener('click', () => {
+          history.pushState({}, '', '/');
+          renderHomePage();
+          document.title = "फास्ट ग्रिड थीम | SEO URL Slug के साथ";
+        });
+      }
+      return;
+    }
+    
+    const tagsHtml = post.tagsArray.map(tag => `<span class="single-post-tag">#${escapeHtml(tag)}</span>`).join('');
+    const dateObj = new Date(post.createdAt);
+    const formattedDate = `${dateObj.toLocaleDateString('hi-IN')} • ${dateObj.toLocaleTimeString('hi-IN')}`;
+    const currentSlug = createSlug(post.title);
+    
+    const singleHtml = `
+      <div class="single-post-container">
+        <img class="single-post-img" src="${escapeHtml(post.imageBase64)}" alt="${escapeHtml(post.title)}" onerror="this.src='https://picsum.photos/id/100/800/450'">
+        <div class="single-post-content">
+          <h1 class="single-post-title">${escapeHtml(post.title)}</h1>
+          <div class="single-post-meta">
+            <span>📅 ${formattedDate}</span>
+            <span>🆔 पोस्ट ID: ${post.id}</span>
+            <span>🔗 URL: /post/${currentSlug}</span>
+          </div>
+          <div class="single-post-tags">${tagsHtml || '<span class="single-post-tag">#notag</span>'}</div>
+          <div class="single-post-description">${escapeHtml(post.description).replace(/\n/g, '<br>')}</div>
+          <div class="back-to-home">← सभी पोस्ट पर वापस जाएं</div>
+        </div>
+      </div>
+    `;
+    appRoot.innerHTML = singleHtml;
+    
+    // Update page title for SEO
+    document.title = `${post.title} | ग्रिड थीम`;
+    
+    // Handle back button click
+    const backLink = document.querySelector('.back-to-home');
+    if (backLink) {
+      backLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        history.pushState({}, '', '/');
+        renderHomePage();
+        document.title = "फास्ट ग्रिड थीम | SEO URL Slug के साथ";
+        window.scrollTo({ top: 0 });
+      });
+    }
+  }
+  
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+  
+  // Routing based on URL path
+  function route() {
+    const path = window.location.pathname;
+    if (path.startsWith('/post/')) {
+      const slug = path.replace('/post/', '');
+      if (slug) {
+        renderSinglePost(slug);
+      } else {
+        renderHomePage();
+      }
+    } else {
+      renderHomePage();
+    }
+  }
+  
+  // Handle browser back/forward
+  window.addEventListener('popstate', () => {
+    route();
+  });
+  
+  // ---------- ADMIN PANEL LOGIC ----------
+  let currentImageData = null;
+  const adminModal = document.getElementById('adminModal');
+  const openAdminBtn = document.getElementById('openAdminBtn');
+  const closeAdminBtn = document.getElementById('closeAdminBtn');
+  const postForm = document.getElementById('postForm');
+  const postTitle = document.getElementById('postTitle');
+  const postDesc = document.getElementById('postDesc');
+  const postTags = document.getElementById('postTags');
+  const postImage = document.getElementById('postImage');
+  const imagePreview = document.getElementById('imagePreviewArea');
+  const imgError = document.getElementById('imgError');
+  
+  // meta elements
+  const metaInput = document.getElementById('metaInputText');
+  const generateBtn = document.getElementById('generateMetaBtn');
+  const smartBtn = document.getElementById('smartMetaBtn');
+  const metaPreview = document.getElementById('metaPreviewArea');
+  const generatedMeta = document.getElementById('generatedMetaText');
+  const copyBtn = document.getElementById('copyMetaBtn');
+  const useInDesc = document.getElementById('useInDescBtn');
+  
+  function generateMetaDescription(text) {
+    if (!text.trim()) return "अद्भुत कंटेंट के साथ नई पोस्ट। विस्तार से जानें।";
+    let cleaned = text.trim();
+    let meta = cleaned.length <= 120 ? cleaned + " - विस्तार से जानें" : cleaned.substring(0, 110) + "… पूरी जानकारी के लिए पढ़ें।";
+    if (meta.length > 160) meta = meta.substring(0, 157) + "…";
+    return meta;
+  }
+  
+  function smartMeta() {
+    let title = postTitle.value;
+    let tags = postTags.value;
+    let base = title ? title.trim() : "नई पोस्ट";
+    let tagArr = tags ? tags.split(',').map(t => t.trim().replace(/^#/, '')).filter(t => t) : [];
+    let tagPart = tagArr.length > 0 ? tagArr.slice(0, 3).join(', ') : "रोचक जानकारी";
+    let metaText = `${base} - ${tagPart} से जुड़ी महत्वपूर्ण बातें, टिप्स और अपडेट्स।`;
+    if (metaText.length > 160) metaText = metaText.substring(0, 157) + "…";
+    return metaText;
+  }
+  
+  generateBtn.addEventListener('click', () => {
+    let val = metaInput.value;
+    if (!val.trim()) { alert("कृपया कोई टेक्स्ट डालें"); return; }
+    metaPreview.style.display = "block";
+    generatedMeta.innerText = generateMetaDescription(val);
+  });
+  
+  smartBtn.addEventListener('click', () => {
+    if (!postTitle.value.trim()) { alert("स्मार्ट मेटा के लिए पहले टाइटल भरें"); return; }
+    metaPreview.style.display = "block";
+    generatedMeta.innerText = smartMeta();
+  });
+  
+  copyBtn.addEventListener('click', () => {
+    if (generatedMeta.innerText) { 
+      navigator.clipboard.writeText(generatedMeta.innerText); 
+      alert("✅ मेटा कॉपी!"); 
+    }
+  });
+  
+  useInDesc.addEventListener('click', () => {
+    if (generatedMeta.innerText) { 
+      postDesc.value = generatedMeta.innerText; 
+      alert("📋 विवरण में डाल दिया"); 
+    }
+  });
+  
+  postImage.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) { currentImageData = null; imagePreview.innerHTML = `<span>प्रीव्यू</span>`; return; }
+    if (!file.type.startsWith('image/')) { imgError.innerText = "इमेज फाइल चुनें"; return; }
+    try {
+      currentImageData = await resizeImageTo250(file);
+      imagePreview.innerHTML = `<img src="${currentImageData}" style="width:100%; height:100%; object-fit:cover;">`;
+    } catch(err) { imgError.innerText = "रीसाइज फेल"; }
+  });
+  
+  postForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let imageData = currentImageData;
+    if (postImage.files.length > 0 && !currentImageData) {
+      const file = postImage.files[0];
+      if (file && file.type.startsWith('image/')) {
+        try { imageData = await resizeImageTo250(file); currentImageData = imageData; } catch(err) {}
+      }
+    }
+    const success = addNewPost(postTitle.value, postDesc.value, postTags.value, imageData);
+    if (success) {
+      postTitle.value = ''; postDesc.value = ''; postTags.value = '';
+      postImage.value = ''; currentImageData = null;
+      imagePreview.innerHTML = `<span>प्रीव्यू</span>`;
+      adminModal.classList.remove('open');
+      currentPage = 1;
+      if (window.location.pathname !== '/') {
+        history.pushState({}, '', '/');
+      }
+      renderHomePage();
+      document.title = "फास्ट ग्रिड थीम | SEO URL Slug के साथ";
+      const toast = document.createElement('div');
+      toast.innerText = "✅ पोस्ट प्रकाशित! अब ग्रिड में क्लिक करें → SEO URL खुलेगा";
+      toast.style.cssText = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#0f172a; color:white; padding:10px 22px; border-radius:40px; z-index:1100";
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+  });
+  
+  openAdminBtn.addEventListener('click', () => {
+    adminModal.classList.add('open');
+    metaPreview.style.display = "none";
+    metaInput.value = "";
+    if (liveSlugPreview) liveSlugPreview.innerText = 'post/आपका-टाइटल';
+  });
+  closeAdminBtn.addEventListener('click', () => adminModal.classList.remove('open'));
+  adminModal.addEventListener('click', (e) => { if (e.target === adminModal) adminModal.classList.remove('open'); });
+  
+  // Initialize
+  loadPostsFromStorage();
+  route();
+</script>
 </body>
 </html>
